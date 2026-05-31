@@ -682,6 +682,8 @@ if not LPH_OBFUSCATED then
             self.__OBJECT.Visible = value
         elseif property == "ZIndex" then
             self.__OBJECT.ZIndex = value
+        elseif property == "Rotation" then
+            self.__OBJECT.Rotation = value
         end
     end
   
