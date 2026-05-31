@@ -436,7 +436,7 @@ if not LPH_OBFUSCATED then
             if type(value) == "string" then
                 value = Drawing2.Font.Enums[Drawing2.Font.Fonts[value]]
             elseif type(value) == "number" then
-                value = Drawing2.Font.Enums[value]
+                value = Drawing2.Font.Enums[value + 1] or Drawing2.Font.Enums[1]
             end
   
             Properties.Font = value
@@ -590,9 +590,13 @@ if not LPH_OBFUSCATED then
   
     function Square:__UPDATE_SCALE()
         local Properties = self.__PROPERTIES
+        local t = 0
+        if not Properties.Filled then
+            t = (Properties.Thickness or 1) / 2
+        end
   
-        self.__OBJECT.Position = fromOffset(Properties.Position.X, Properties.Position.Y)
-        self.__OBJECT.Size = fromOffset(Properties.Size.X, Properties.Size.Y)
+        self.__OBJECT.Position = fromOffset(Properties.Position.X + t, Properties.Position.Y + t)
+        self.__OBJECT.Size = fromOffset(max(0, Properties.Size.X - t * 2), max(0, Properties.Size.Y - t * 2))
     end
   
     function Square:Remove()
