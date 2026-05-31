@@ -436,7 +436,7 @@ if not LPH_OBFUSCATED then
             if type(value) == "string" then
                 value = Drawing2.Font.Enums[Drawing2.Font.Fonts[value]]
             elseif type(value) == "number" then
-                value = Drawing2.Font.Enums[value + 1] or Drawing2.Font.Enums[1]
+                value = Drawing2.Font.Enums[value]
             end
   
             Properties.Font = value
