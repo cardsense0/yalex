@@ -444,7 +444,7 @@ if not LPH_OBFUSCATED then
             self.__OBJECT.FontFace = value
             self:_UPDATE_TEXT_BOUNDS()
         elseif property == "Outline" then
-            self.__OBJECT.TextStrokeTransparency = value and 0 or 1
+            self.__OBJECT._STROKE.Enabled = value
         elseif property == "OutlineColor" then
             self.__OBJECT._STROKE.Color = value
         elseif property == "Center" then
