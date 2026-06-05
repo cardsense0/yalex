@@ -428,6 +428,7 @@ if not LPH_OBFUSCATED then
             self.__OBJECT.Position = fromOffset(value.X, value.Y)
         elseif property == "Size" then
             self.__OBJECT.TextSize = value
+            self.__OBJECT._STROKE.Thickness = value < 10 and 0.5 or 1
             self:_UPDATE_TEXT_BOUNDS()
         elseif property == "Text" then
             self.__OBJECT.Text = value
@@ -444,7 +445,9 @@ if not LPH_OBFUSCATED then
             self.__OBJECT.FontFace = value
             self:_UPDATE_TEXT_BOUNDS()
         elseif property == "Outline" then
-            self.__OBJECT._STROKE.Enabled = value
+            local stroke = self.__OBJECT._STROKE
+            stroke.Thickness = Properties.Size < 10 and 0.5 or 1
+            stroke.Enabled = value
         elseif property == "OutlineColor" then
             self.__OBJECT._STROKE.Color = value
         elseif property == "Center" then
