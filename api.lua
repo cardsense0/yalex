@@ -129,6 +129,7 @@ if not LPH_OBFUSCATED then
 
     local __ROOT = Drawing2.CreateInstance("ScreenGui", {
         IgnoreGuiInset = true,
+        ScreenInsets = Enum.ScreenInsets.None,
         DisplayOrder = 10,
         Name = HttpService:GenerateGUID(false),
         ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
