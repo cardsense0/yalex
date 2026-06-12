@@ -452,6 +452,7 @@ if not LPH_OBFUSCATED then
             local object = self.__OBJECT
             object.TextTransparency = value
             object.TextStrokeTransparency = Properties.Outline and value or 1
+            object.BackgroundTransparency = 1
         elseif property == "Visible" then
             self.__OBJECT.Visible = value
         elseif property == "ZIndex" then
