@@ -33,7 +33,7 @@ if not LPH_OBFUSCATED then
   
     local udim2New = clonefunction(UDim2.new)
     local udim2FromOffset = clonefunction(UDim2.fromOffset)
-    local fromOffset = function(X, Y) return udim2FromOffset(floor(X), floor(Y)) end
+    local fromOffset = udim2FromOffset
   
     local vector2New = clonefunction(Vector2.new)
     local vectorZero = Vector2.zero
@@ -386,15 +386,10 @@ if not LPH_OBFUSCATED then
                 BorderSizePixel = 0,
                 ZIndex = 0,
                 Visible = false,
-                Parent = __ROOT
-            }, {
-                Drawing2.CreateInstance("UIStroke", {
-                    Name = "_STROKE",
-                    Color = color3New(0, 0, 0),
-                    LineJoinMode = Enum.LineJoinMode.Miter,
-                    Enabled = false,
-                    Thickness = 1
-                })
+                Visible = false,
+                Parent = __ROOT,
+                TextStrokeTransparency = 1,
+                TextStrokeColor3 = color3New(0, 0, 0)
             })
         }, Text)
   
@@ -430,7 +425,6 @@ if not LPH_OBFUSCATED then
             self.__OBJECT.Position = fromOffset(value.X, value.Y)
         elseif property == "Size" then
             self.__OBJECT.TextSize = value
-            self.__OBJECT._STROKE.Thickness = value < 10 and 0.5 or 1
             self:_UPDATE_TEXT_BOUNDS()
         elseif property == "Text" then
             self.__OBJECT.Text = value
@@ -447,18 +441,16 @@ if not LPH_OBFUSCATED then
             self.__OBJECT.FontFace = value
             self:_UPDATE_TEXT_BOUNDS()
         elseif property == "Outline" then
-            local stroke = self.__OBJECT._STROKE
-            stroke.Thickness = Properties.Size < 10 and 0.5 or 1
-            stroke.Enabled = value
+            self.__OBJECT.TextStrokeTransparency = value and (1 - Properties.Transparency) or 1
         elseif property == "OutlineColor" then
-            self.__OBJECT._STROKE.Color = value
+            self.__OBJECT.TextStrokeColor3 = value
         elseif property == "Center" then
             self.__OBJECT.TextXAlignment = value and Enum.TextXAlignment.Center or Enum.TextXAlignment.Left
         elseif property == "Transparency" then
             local value = clamp(1 - value, 0, 1)
             local object = self.__OBJECT
             object.Transparency = value
-            object._STROKE.Transparency = value
+            object.TextStrokeTransparency = Properties.Outline and value or 1
         elseif property == "Visible" then
             self.__OBJECT.Visible = value
         elseif property == "ZIndex" then
