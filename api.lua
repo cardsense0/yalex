@@ -378,6 +378,7 @@ if not LPH_OBFUSCATED then
                 TextColor3 = color3New(1, 1, 1),
                 Position = udim2New(0, 0, 0, 0),
                 Size = udim2New(0, 0, 0, 0),
+                AutomaticSize = Enum.AutomaticSize.XY,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 TextYAlignment = Enum.TextYAlignment.Top,
                 FontFace = Drawing2.Font.Enums[1],
