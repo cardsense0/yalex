@@ -450,7 +450,7 @@ if not LPH_OBFUSCATED then
         elseif property == "Transparency" then
             local value = clamp(1 - value, 0, 1)
             local object = self.__OBJECT
-            object.Transparency = value
+            object.TextTransparency = value
             object.TextStrokeTransparency = Properties.Outline and value or 1
         elseif property == "Visible" then
             self.__OBJECT.Visible = value
