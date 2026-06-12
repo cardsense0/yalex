@@ -32,7 +32,8 @@ if not LPH_OBFUSCATED then
     }
   
     local udim2New = clonefunction(UDim2.new)
-    local fromOffset = clonefunction(UDim2.fromOffset)
+    local udim2FromOffset = clonefunction(UDim2.fromOffset)
+    local fromOffset = function(X, Y) return udim2FromOffset(floor(X), floor(Y)) end
   
     local vector2New = clonefunction(Vector2.new)
     local vectorZero = Vector2.zero
