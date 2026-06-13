@@ -32,8 +32,7 @@ if not LPH_OBFUSCATED then
     }
   
     local udim2New = clonefunction(UDim2.new)
-    local udim2FromOffset = clonefunction(UDim2.fromOffset)
-    local fromOffset = udim2FromOffset
+    local fromOffset = clonefunction(UDim2.fromOffset)
   
     local vector2New = clonefunction(Vector2.new)
     local vectorZero = Vector2.zero
@@ -129,7 +128,6 @@ if not LPH_OBFUSCATED then
 
     local __ROOT = Drawing2.CreateInstance("ScreenGui", {
         IgnoreGuiInset = true,
-        ScreenInsets = Enum.ScreenInsets.None,
         DisplayOrder = 10,
         Name = HttpService:GenerateGUID(false),
         ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
@@ -378,7 +376,6 @@ if not LPH_OBFUSCATED then
                 TextColor3 = color3New(1, 1, 1),
                 Position = udim2New(0, 0, 0, 0),
                 Size = udim2New(0, 0, 0, 0),
-                AutomaticSize = Enum.AutomaticSize.XY,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 TextYAlignment = Enum.TextYAlignment.Top,
                 FontFace = Drawing2.Font.Enums[1],
@@ -387,10 +384,15 @@ if not LPH_OBFUSCATED then
                 BorderSizePixel = 0,
                 ZIndex = 0,
                 Visible = false,
-                Visible = false,
-                Parent = __ROOT,
-                TextStrokeTransparency = 1,
-                TextStrokeColor3 = color3New(0, 0, 0)
+                Parent = __ROOT
+            }, {
+                Drawing2.CreateInstance("UIStroke", {
+                    Name = "_STROKE",
+                    Color = color3New(0, 0, 0),
+                    LineJoinMode = Enum.LineJoinMode.Miter,
+                    Enabled = false,
+                    Thickness = 1
+                })
             })
         }, Text)
   
@@ -426,6 +428,7 @@ if not LPH_OBFUSCATED then
             self.__OBJECT.Position = fromOffset(value.X, value.Y)
         elseif property == "Size" then
             self.__OBJECT.TextSize = value
+            self.__OBJECT._STROKE.Thickness = value < 10 and 0.5 or 1
             self:_UPDATE_TEXT_BOUNDS()
         elseif property == "Text" then
             self.__OBJECT.Text = value
@@ -442,17 +445,18 @@ if not LPH_OBFUSCATED then
             self.__OBJECT.FontFace = value
             self:_UPDATE_TEXT_BOUNDS()
         elseif property == "Outline" then
-            self.__OBJECT.TextStrokeTransparency = value and (1 - Properties.Transparency) or 1
+            local stroke = self.__OBJECT._STROKE
+            stroke.Thickness = Properties.Size < 10 and 0.5 or 1
+            stroke.Enabled = value
         elseif property == "OutlineColor" then
-            self.__OBJECT.TextStrokeColor3 = value
+            self.__OBJECT._STROKE.Color = value
         elseif property == "Center" then
             self.__OBJECT.TextXAlignment = value and Enum.TextXAlignment.Center or Enum.TextXAlignment.Left
         elseif property == "Transparency" then
             local value = clamp(1 - value, 0, 1)
             local object = self.__OBJECT
-            object.TextTransparency = value
-            object.TextStrokeTransparency = Properties.Outline and value or 1
-            object.BackgroundTransparency = 1
+            object.Transparency = value
+            object._STROKE.Transparency = value
         elseif property == "Visible" then
             self.__OBJECT.Visible = value
         elseif property == "ZIndex" then
